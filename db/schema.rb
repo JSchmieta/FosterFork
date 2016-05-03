@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426072906) do
+ActiveRecord::Schema.define(version: 20160428113745) do
 
   create_table "abuse_reports", force: :cascade do |t|
     t.integer  "project_id"
@@ -43,7 +43,10 @@ ActiveRecord::Schema.define(version: 20160426072906) do
     t.integer  "priority",   default: 0, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "slug"
   end
+
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -181,5 +184,9 @@ ActiveRecord::Schema.define(version: 20160426072906) do
     t.decimal  "project_proximity"
     t.string   "unconfirmed_email"
   end
+
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
